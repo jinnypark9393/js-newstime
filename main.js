@@ -60,6 +60,23 @@ function addSearchBar() {
     }
 }
 
+const getNewsByKeyword = async () => {
+    const keyword = document.getElementById("search-input").value
+    console.log("keyword", keyword)
+
+    const url = new URL(
+        // API KEY는 맨 끝에(바뀌지 않는 값)
+        `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
+        );
+    const response = await fetch(url);
+    const data = await response.json()
+    newsList = data.articles
+
+    console.log("news: ", newsList);
+    
+    render()
+}
+
 // 뉴스 리스트 그려주는 함수
 const render = () => {
     const newsHTML = newsList.map(news =>  `<div class="row news">
