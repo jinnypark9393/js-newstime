@@ -2,6 +2,8 @@ const API_KEY = "a8e8910b7aa0462dac26cc5a997a65bc"
 let newsList = [] // 다른 함수에서 사용하기 위해 전역변수 선언
 let searchIcon = document.getElementById("search-icon")
 let showSearchIcon = false;
+// URL 전역변수로 빼기
+let url = new URL(`https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`)
 
 const menus = document.querySelectorAll(".menus button")
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)))
@@ -15,22 +17,26 @@ const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-const getLatestNews = async () => {
-    // JS 내장함수 활용해 URL 인스턴스 생성
-    let url = new URL(
-        `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`
-        )
-    console.log("URL", url)
-
-    // fetch 함수가 데이터를 받을 때까지 대기: await (안쓰면 데이터 출력 안되고 pending 상태가 됨)
-    // await을 포함하려면 비동기 함수 표현을 넣어야함: async
+const getNews = async () => {
     const response = await fetch(url);
     const data = await response.json() // response를 json형태로 변환
     newsList = data.articles
 
-    // console.log("response: ", response);
-    console.log("news: ", newsList);
     render()
+}
+
+const getLatestNews = async () => {
+    // JS 내장함수 활용해 URL 인스턴스 생성
+    url = new URL(`https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`)
+    // console.log("URL", url)
+
+    // fetch 함수가 데이터를 받을 때까지 대기: await (안쓰면 데이터 출력 안되고 pending 상태가 됨)
+    // await을 포함하려면 비동기 함수 표현을 넣어야함: async
+    
+    // console.log("response: ", response);
+    // console.log("news: ", newsList);
+
+    getNews()
 }
 
 // 카테고리 별 뉴스 가져오기
@@ -39,16 +45,14 @@ const getLatestNews = async () => {
 // 3. 카테고리에 해당하는 뉴스 보여주기
 const getNewsByCategory = async (event) => {
     const category = event.target.textContent.toLowerCase();
-    console.log("category: ", category)
-    const url = new URL(
+    // console.log("category: ", category)
+    // 전역변수 url을 재정의
+    url = new URL(
         // API KEY는 맨 끝에(바뀌지 않는 값)
         `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
         );
-    const response = await fetch(url);
-    const data = await response.json()
-    newsList = data.articles
-
-    render()
+    
+    getNews()
 }
 
 function addSearchBar() {
@@ -62,19 +66,14 @@ function addSearchBar() {
 
 const getNewsByKeyword = async () => {
     const keyword = document.getElementById("search-input").value
-    console.log("keyword", keyword)
+    // console.log("keyword", keyword)
 
-    const url = new URL(
+    url = new URL(
         // API KEY는 맨 끝에(바뀌지 않는 값)
         `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
         );
-    const response = await fetch(url);
-    const data = await response.json()
-    newsList = data.articles
-
-    console.log("news: ", newsList);
     
-    render()
+    getNews()
 }
 
 // 뉴스 리스트 그려주는 함수
