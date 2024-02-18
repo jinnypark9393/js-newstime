@@ -3,7 +3,7 @@ let newsList = [] // 다른 함수에서 사용하기 위해 전역변수 선언
 let searchIcon = document.getElementById("search-icon")
 let showSearchIcon = false;
 // URL 전역변수로 빼기
-let url = new URL(`https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`)
+let url = new URL(`https://240224-assignment.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`)
 let totalResults = 0
 let page = 1
 const pageSize = 10 // 고정값
@@ -52,7 +52,7 @@ const getNews = async () => {
 
 const getLatestNews = async () => {
     // JS 내장함수 활용해 URL 인스턴스 생성
-    url = new URL(`https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`)
+    url = new URL(`https://240224-assignment.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`)
     // console.log("URL", url)
 
     // fetch 함수가 데이터를 받을 때까지 대기: await (안쓰면 데이터 출력 안되고 pending 상태가 됨)
@@ -74,7 +74,7 @@ const getNewsByCategory = async (event) => {
     // 전역변수 url을 재정의
     url = new URL(
         // API KEY는 맨 끝에(바뀌지 않는 값)
-        `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
+        `https://240224-assignment.netlify.app/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
         );
     
     getNews()
@@ -95,7 +95,7 @@ const getNewsByKeyword = async () => {
 
     url = new URL(
         // API KEY는 맨 끝에(바뀌지 않는 값)
-        `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
+        `https://240224-assignment.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
         );
     
     getNews()
