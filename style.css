@@ -138,3 +138,10 @@
 #input-area {
     display: none;
 }
+
+.pagination {
+    margin-top: 10px;
+}
+.page-item {
+    cursor: pointer;
+}

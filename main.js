@@ -4,6 +4,10 @@ let searchIcon = document.getElementById("search-icon")
 let showSearchIcon = false;
 // URL 전역변수로 빼기
 let url = new URL(`https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`)
+let totalResults = 0
+let page = 1
+const pageSize = 10 // 고정값
+const groupSize = 5 // 고정값
 
 const menus = document.querySelectorAll(".menus button")
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)))
@@ -19,6 +23,10 @@ const closeNav = () => {
 
 const getNews = async () => {
     try {
+        // URL 끝에 쿼리 세팅 (URL 호출 전에 세팅해야함)
+        url.searchParams.set("page", page) // => &page=page
+        url.searchParams.set("pageSize", pageSize)
+
         // 에러 검사하고자 하는 대상 코드 삽입
         const response = await fetch(url);
         const data = await response.json() // response를 json형태로 변환
@@ -28,7 +36,9 @@ const getNews = async () => {
                 throw new Error("No result for this search.")
             }
             newsList = data.articles
+            totalResults = data.totalResults
             render()
+            paginationRender()
         } else {
             throw new Error(data.message)
         }
@@ -115,6 +125,40 @@ const errorRender = (errorMessage) => {
     ${errorMessage}
     </div>`
     document.getElementById("news-section").innerHTML = errorHTML;
+}
+
+const paginationRender = () => {
+    // totalResult
+    // page
+    // pageSize
+    // groupSize
+
+    // totalPages
+    const totalPages = Math.ceil(totalResults / pageSize)
+    // pageGroup
+    const pageGroup = Math.ceil(page / groupSize)
+    // lastPage
+    // 마지막 페이지 그룹이 그룹 사이즈보다 삭을 경우? lastPage = totalPage
+    let lastPage = pageGroup * groupSize
+    if (lastPage > totalPages) {
+        lastPage = totalPages
+    } 
+    // firstPage가 0보다 작을 경우 1: 아닐 경우 원래 수식
+    let firstPage = lastPage - (groupSize - 1)<=0? 1: lastPage - (groupSize - 1);
+
+    let paginationHTML = ``
+    for (let i = firstPage; i <= lastPage; i++) {
+        paginationHTML += `
+        <li class="page-item ${i === page ? "active" : ""}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>
+        `
+    }
+    document.querySelector(".pagination").innerHTML = paginationHTML
+} 
+
+const moveToPage = (pageNum) => {
+    console.log("pageNum:", pageNum)
+    page = pageNum;
+    getNews()
 }
 
 getLatestNews()
