@@ -18,11 +18,26 @@ const closeNav = () => {
 }
 
 const getNews = async () => {
-    const response = await fetch(url);
-    const data = await response.json() // response를 json형태로 변환
-    newsList = data.articles
+    try {
+        // 에러 검사하고자 하는 대상 코드 삽입
+        const response = await fetch(url);
+        const data = await response.json() // response를 json형태로 변환
 
-    render()
+        if (response.status === 200) {
+            if (data.articles.length === 0) {
+                throw new Error("No result for this search.")
+            }
+            newsList = data.articles
+            render()
+        } else {
+            throw new Error(data.message)
+        }
+    } catch (error) {
+        // console.log("error: ", error)
+        let errorMessage = error.message
+        errorRender(errorMessage)
+    }
+    
 }
 
 const getLatestNews = async () => {
@@ -93,6 +108,13 @@ const render = () => {
     </div>
   </div>`).join(''); // array를 string으로 변경(','를 안보이게)
     document.getElementById("news-section").innerHTML = newsHTML;
+}
+
+const errorRender = (errorMessage) => {
+    const errorHTML = `<div class="alert alert-danger" role="alert">
+    ${errorMessage}
+    </div>`
+    document.getElementById("news-section").innerHTML = errorHTML;
 }
 
 getLatestNews()
