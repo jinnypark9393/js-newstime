@@ -146,12 +146,15 @@ const paginationRender = () => {
     // firstPage가 0보다 작을 경우 1: 아닐 경우 원래 수식
     let firstPage = lastPage - (groupSize - 1)<=0? 1: lastPage - (groupSize - 1);
 
-    let paginationHTML = ``
+    let paginationHTML = `<li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})"><a class="page-link">Previous</a></li>
+    `
     for (let i = firstPage; i <= lastPage; i++) {
         paginationHTML += `
         <li class="page-item ${i === page ? "active" : ""}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>
         `
     }
+
+    paginationHTML += `<li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})"><a class="page-link">Next</a></li>`
     document.querySelector(".pagination").innerHTML = paginationHTML
 } 
 

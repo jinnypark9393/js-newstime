@@ -142,6 +142,6 @@
 .pagination {
     margin-top: 10px;
 }
-.page-item {
+.page-link {
     cursor: pointer;
 }
