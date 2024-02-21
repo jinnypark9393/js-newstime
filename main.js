@@ -150,19 +150,19 @@ const paginationRender = () => {
 
     // 1페이지에서는 Previous 버튼 삭제 	
     let paginationHTML = `
-    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(1)"><a class="page-link" href="#">&laquo;</a></li>
-    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})"><a class="page-link">&lt;</a></li>
+    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(1)" href="#js-bottom"><a class="page-link" href="#">&laquo;</a></li>
+    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})" href="#js-bottom"><a class="page-link">&lt;</a></li>
     `
     for (let i = firstPage; i <= lastPage; i++) {
-        // 마지막 페이지에서는 Next 버튼 삭제
         paginationHTML += `
         <li class="page-item ${i === page ? "active" : ""}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>
         `
     }
 
+    // 마지막 페이지에서는 Next 버튼 삭제
     paginationHTML += `
-    <li class="page-item style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})"><a class="page-link">&gt;</a></li>
-    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${totalPages})"><a class="page-link">&raquo;</a></li>
+    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})" href="#js-bottom"><a class="page-link">&gt;</a></li>
+    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${totalPages})" href="#js-bottom"><a class="page-link">&raquo;</a></li>
     `
     document.querySelector(".pagination").innerHTML = paginationHTML
 } 
