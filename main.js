@@ -133,28 +133,37 @@ const paginationRender = () => {
     // pageSize
     // groupSize
 
-    // totalPages
+    // totalPages: 총 페이지 수 = 총 데이터 수 / 페이지 사이즈(10)
     const totalPages = Math.ceil(totalResults / pageSize)
-    // pageGroup
-    const pageGroup = Math.ceil(page / groupSize)
-    // lastPage
-    // 마지막 페이지 그룹이 그룹 사이즈보다 삭을 경우? lastPage = totalPage
+    // pageGroup: 현재 페이지를 그룹 사이즈(5)로 나눈 것 (예: page=13 이면 13/5=2.6의 반올림=3)
+    let pageGroup = Math.ceil(page / groupSize)
+    
+    // lastPage: 페이지 그룹의 마지막 페이지
+    // 마지막 페이지 그룹이 그룹 사이즈보다 클 경우? lastPage = totalPage
     let lastPage = pageGroup * groupSize
-    if (lastPage > totalPages) {
+    if (lastPage > totalPages || lastPage < groupSize) {
         lastPage = totalPages
-    } 
+    }
+    // firstPage: 페이지 그룹의 첫번째 페이지
     // firstPage가 0보다 작을 경우 1: 아닐 경우 원래 수식
     let firstPage = lastPage - (groupSize - 1)<=0? 1: lastPage - (groupSize - 1);
 
-    let paginationHTML = `<li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})"><a class="page-link">Previous</a></li>
+    // 1페이지에서는 Previous 버튼 삭제 	
+    let paginationHTML = `
+    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(1)"><a class="page-link" href="#">&laquo;</a></li>
+    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})"><a class="page-link">&lt;</a></li>
     `
     for (let i = firstPage; i <= lastPage; i++) {
+        // 마지막 페이지에서는 Next 버튼 삭제
         paginationHTML += `
         <li class="page-item ${i === page ? "active" : ""}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>
         `
     }
 
-    paginationHTML += `<li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})"><a class="page-link">Next</a></li>`
+    paginationHTML += `
+    <li class="page-item style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})"><a class="page-link">&gt;</a></li>
+    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${totalPages})"><a class="page-link">&raquo;</a></li>
+    `
     document.querySelector(".pagination").innerHTML = paginationHTML
 } 
 
