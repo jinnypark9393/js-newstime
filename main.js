@@ -10,7 +10,9 @@ const pageSize = 10 // 고정값
 const groupSize = 5 // 고정값
 
 const menus = document.querySelectorAll(".menus button")
+const sideMenus = document.querySelectorAll(".side-menus button")
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)))
+sideMenus.forEach(sideMenus => sideMenus.addEventListener("click", (event) => getNewsByCategory(event)))
 
 // 네비게이션 바
 const openNav = () => {
@@ -150,8 +152,8 @@ const paginationRender = () => {
 
     // 1페이지에서는 Previous 버튼 삭제 	
     let paginationHTML = `
-    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(1)" href="#js-bottom"><a class="page-link" href="#">&laquo;</a></li>
-    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})" href="#js-bottom"><a class="page-link">&lt;</a></li>
+    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(1)" href="#js-bottom"><a class="page-link btn-page-move" href="#">&lt;&lt;</a></li>
+    <li class="page-item" style="${page === 1 ? "display: none;" : ""}" onclick="moveToPage(${page-1})" href="#js-bottom"><a class="page-link btn-page-move">&lt;</a></li>
     `
     for (let i = firstPage; i <= lastPage; i++) {
         paginationHTML += `
@@ -161,8 +163,8 @@ const paginationRender = () => {
 
     // 마지막 페이지에서는 Next 버튼 삭제
     paginationHTML += `
-    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})" href="#js-bottom"><a class="page-link">&gt;</a></li>
-    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${totalPages})" href="#js-bottom"><a class="page-link">&raquo;</a></li>
+    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${page+1})" href="#js-bottom"><a class="page-link btn-page-move">&gt;</a></li>
+    <li class="page-item" style="${page === totalPages ? "display: none;" : ""}" onclick="moveToPage(${totalPages})" href="#js-bottom"><a class="page-link btn-page-move">&gt;&gt;</a></li>
     `
     document.querySelector(".pagination").innerHTML = paginationHTML
 } 

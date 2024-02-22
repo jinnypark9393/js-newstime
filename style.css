@@ -86,20 +86,20 @@
     padding-top: 60px;
 }
 
-.side-menu-list {
+.side-menus {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.side-menu-list button {
+.side-menus button {
     margin: 5px;
     border: none;
     background: none;
     width: 120px;
 }
 
-.side-menu-list button:hover {
+.side-menus button:hover {
     background-color: grey;
     border-radius: 3px;
 }
@@ -139,9 +139,30 @@
     display: none;
 }
 
+.page-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .pagination {
     margin-top: 10px;
+    display: flex;
+    align-items: center;
 }
 .page-link {
     cursor: pointer;
+    color: black;
+    border: none;
+}
+
+.btn-page-move {
+    font-size: 11px;
+}
+
+.active>.page-link, .page-link.active {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border: none;
 }
