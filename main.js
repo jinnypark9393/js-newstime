@@ -1,11 +1,13 @@
 import config from "./config/apikey.js"
 
 const API_KEY = config.apiKey;
+console.log(API_KEY)
+
 let newsList = [] // 다른 함수에서 사용하기 위해 전역변수 선언
 let searchIcon = document.getElementById("search-icon")
 let showSearchIcon = false;
 // URL 전역변수로 빼기
-let url = new URL(`https://240224-assignment.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`)
+let url = new URL(`https://240224-assignment.netlify.app/top-headlines?country=kr`)
 let totalResults = 0
 let page = 1
 const pageSize = 10 // 고정값
