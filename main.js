@@ -1,4 +1,6 @@
-const API_KEY = "a8e8910b7aa0462dac26cc5a997a65bc"
+import config from "./config/apikey.js"
+
+const API_KEY = config.apiKey;
 let newsList = [] // 다른 함수에서 사용하기 위해 전역변수 선언
 let searchIcon = document.getElementById("search-icon")
 let showSearchIcon = false;
